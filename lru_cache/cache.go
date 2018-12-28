@@ -19,6 +19,9 @@ type lruCache struct {
 }
 
 func NewLruCache(maxLength int) *lruCache {
+	if maxLength <= 0 {
+		return nil
+	}
 	return &lruCache{
 		maxSize: maxLength,
 		data:    make(map[interface{}]*value),
