@@ -31,7 +31,7 @@ func (c *lruCache) Set(key interface{}, data []byte) {
 	c.lck.Lock()
 	defer c.lck.Unlock()
 	if val, found := c.data[key]; found {
-		c.deleteLruItem(val.lruPos)  //删除原先在list中的位置
+		c.deleteLruItem(val.lruPos)       //删除原先在list中的位置
 		val.lruPos = c.updateNewItem(key) // 追加到list末尾，更新位置标示
 		c.data[key] = val
 	} else {
@@ -55,7 +55,7 @@ func (c *lruCache) Get(key interface{}) (exist bool, data []byte) {
 	defer c.lck.Unlock()
 	if val, found := c.data[key]; found {
 		data = val.data
-		c.deleteLruItem(val.lruPos)  //删除原先在list中的位置
+		c.deleteLruItem(val.lruPos)       //删除原先在list中的位置
 		val.lruPos = c.updateNewItem(key) // 追加到list末尾，更新位置标示
 		c.data[key] = val
 		exist = true
@@ -74,13 +74,13 @@ func (c *lruCache) updateNewItem(key interface{}) (item *list.Element) {
 	return
 }
 
-func (c *lruCache) Length () int {
+func (c *lruCache) Length() int {
 	c.lck.Lock()
 	defer c.lck.Unlock()
 	return len(c.data)
 }
 
-func (c *lruCache)DebugShowMapData () {
+func (c *lruCache) DebugShowMapData() {
 	c.lck.Lock()
 	defer c.lck.Unlock()
 	fmt.Println("=== map ===")
@@ -89,7 +89,7 @@ func (c *lruCache)DebugShowMapData () {
 	}
 	fmt.Println("=== map over ===")
 }
-func (c *lruCache)DebugShowLruList () {
+func (c *lruCache) DebugShowLruList() {
 	c.lck.Lock()
 	defer c.lck.Unlock()
 	fmt.Println("=== list ===")
@@ -99,7 +99,7 @@ func (c *lruCache)DebugShowLruList () {
 	fmt.Println("\n=== list over ===")
 }
 
-func (c *lruCache) Delete (key interface{}) {
+func (c *lruCache) Delete(key interface{}) {
 	c.lck.Lock()
 	defer c.lck.Unlock()
 	if val, found := c.data[key]; found {
