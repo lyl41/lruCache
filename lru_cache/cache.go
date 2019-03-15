@@ -7,7 +7,7 @@ import (
 )
 
 type value struct {
-	data   []byte
+	data   interface{}
 	lruPos *list.Element
 }
 
@@ -30,7 +30,7 @@ func NewLruCache(maxLength int) *lruCache {
 	}
 }
 
-func (c *lruCache) Set(key interface{}, data []byte) {
+func (c *lruCache) Set(key interface{}, data interface{}) {
 	c.lck.Lock()
 	defer c.lck.Unlock()
 	if val, found := c.data[key]; found {
@@ -54,7 +54,7 @@ func (c *lruCache) Set(key interface{}, data []byte) {
 	}
 }
 
-func (c *lruCache) Get(key interface{}) (exist bool, data []byte) {
+func (c *lruCache) Get(key interface{}) (exist bool, data interface{}) {
 	c.lck.Lock()
 	defer c.lck.Unlock()
 	if val, found := c.data[key]; found {
